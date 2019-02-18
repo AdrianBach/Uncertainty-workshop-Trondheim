@@ -6,7 +6,7 @@
 rm(list=ls())
 
 # set work directory
-setwd("Documents/uncertainty_workshop/")
+setwd("/home/adrian/Documents/GitKraken/Workshop task")
 getwd()
 
 # packages
@@ -16,11 +16,6 @@ getwd()
 d <- read.csv("uncert_repres_review1.csv", h = T)
 
 #### collide the dichotomies into a single string ####
-
-# # binary column as factors
-# for (i in 2:(ncol(d)-3)) {
-#  d[,i] <- as.factor(d[,i])
-# }
 
 # column were dichotomies assessment starts
 st <- 6
@@ -45,6 +40,11 @@ for (i in 1:nrow(d)) {
   
   # convert to decimal using personal function
   d[i,nd+2] <- bin2dec(bin_strg)
+}
+
+# binary column as factors
+for (i in 2:ncol(d)) {
+ d[,i] <- as.factor(d[,i])
 }
 
 # export the new table
