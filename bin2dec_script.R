@@ -2,20 +2,35 @@
 # NINA uncertainty workshop - build a barplot of frequency of use of the different types of uncertainty representations in Conservation Policy Documents
 # Script to build the binary code associated with each observation and convert it into decimal to plot
 
-# Clear list
+## Clear list
 rm(list=ls())
 
-# set work directory
+## set work directory
 setwd("/home/adrian/Documents/GitKraken/Workshop task")
 getwd()
 
-# packages
+## packages
 
+## personal functions
 
-# import data set
+# convert a binary string into a decimal
+bin2dec <- function(x) {
+  
+  # init sum
+  binsum <- 0
+  for (i in 1:length(x)) {
+    binsum <- binsum + 2^(i-1) * x[i]
+  }
+  
+  return(binsum)
+}
+
+#### collide the dichotomies into a string, convert into a decimal, and write them into the table ####
+
+## import data set
 d <- read.csv("uncert_repres_review1.csv", h = T)
 
-#### collide the dichotomies into a single string ####
+## loop
 
 # column were dichotomies assessment starts
 st <- 6
@@ -35,14 +50,14 @@ for (i in 1:nrow(d)) {
     bin_strg[j-(nd-st)] <- d[i,j]
   }
   
-  # assign bin to the right column
+  # assign bin to the corresponding column
   d[i,nd+1] <- bin
   
-  # convert to decimal using personal function
+  # convert to decimal using personal function and assign to the correspondig column
   d[i,nd+2] <- bin2dec(bin_strg)
 }
 
-# binary column as factors
+## column values as factors
 for (i in 2:ncol(d)) {
  d[,i] <- as.factor(d[,i])
 }
